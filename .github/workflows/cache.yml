@@ -5,4 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          # path 인자로는 우분투 운영체제에서 npm이 패키지 저장소에서 내려받은 패키지를 CI 서버에 저장해두는 경로를 지정하고 있고요.
+          # key 인자로는 깃허브의 캐시에서 데이터를 읽거나 쓸 때 사용되는 식별자를 명시합니다.
+          path: ~/.npm
+          key: ${{runner.os}}-node-${{hashfiles('/package-lock.json')}}
       - run: npm ci
